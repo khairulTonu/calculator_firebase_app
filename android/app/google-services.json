@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "724858084587",
+    "project_id": "calculator-firebase-5317a",
+    "storage_bucket": "calculator-firebase-5317a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724858084587:android:feb0f4851246c2407d32ae",
+        "android_client_info": {
+          "package_name": "com.tonu.calculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "724858084587-ma0riors79farr29ai97januvlb529me.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tonu.calculator",
+            "certificate_hash": "769a116e0c0bc936a9080c5651095250336191e4"
+          }
+        },
+        {
+          "client_id": "724858084587-deuf1tgtt44jllinf4f6gpvc9pfd2677.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBV9cxUCUWRNEgpxkCrk99SYv75wfAD4us"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724858084587-deuf1tgtt44jllinf4f6gpvc9pfd2677.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
