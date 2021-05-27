@@ -1,10 +1,12 @@
 import 'package:calculator_firebase_app/model/calculation-data.dart';
+import 'package:calculator_firebase_app/view/calculator/controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
 class DbController{
   static FirebaseFirestore fireStore = FirebaseFirestore.instance;
-  static String email;
+  static UserCredential userCredential;
 
   static Future<bool> checkUserExist(String docID) async {
     bool exists = false;
@@ -21,19 +23,41 @@ class DbController{
     }
   }
 
+  static Future<List<CalculationData>> getHistory() async {
+    CollectionReference users = fireStore.collection('users');
+    QuerySnapshot historyDoc = await users.doc("${userCredential.user.email}").collection('history').orderBy("id").get();
+    List<DocumentSnapshot> historyList = historyDoc.docs ?? [];
+    if (historyList.length > 0) {
+      try {
+        return historyList.map((document) {
+          CalculationData data = CalculationData.fromJson(Map<String, dynamic>.from(document.data()));
+          return data;
+        }).toList();
+      } catch (e) {
+        print("Exception $e");
+        return [];
+      }
+    }
+    return [];
+  }
+
   static Future insertData(CalculationData calculationData) async
   {
     CollectionReference users = fireStore.collection('users');
-    QuerySnapshot historyDoc = await users.doc("$email").collection('history').get();
-    List<DocumentSnapshot> historyList = historyDoc.docs ?? [];
-    calculationData.id = "${historyList.length + 1}";
+    List<CalculationData> historyList = await getHistory();
+    calculationData.id = historyList.length + 1;
     DateFormat dateFormat = new DateFormat("yyyy-MM-dd hh:mm:ss a");
     DateTime now = DateTime.now();
     String currentTimeStr = dateFormat.format(now);
     calculationData.time = currentTimeStr;
-    users.doc("$email").collection("history").doc().set(calculationData.toJson()).whenComplete(() {
+    users.doc("${userCredential.user.email}").collection("history").doc().set(calculationData.toJson()).whenComplete(() {
       print("Data added to db");
     });
+    if(Controller.previousId == null)
+      {
+        Controller.previousId = calculationData.id;
+        Controller.refresh();
+      }
   }
 
 }

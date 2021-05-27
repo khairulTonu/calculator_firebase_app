@@ -1,8 +1,8 @@
-import 'package:calculator_firebase_app/sign-in.dart';
+import 'package:calculator_firebase_app/view/authentication/sign-in.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:calculator_firebase_app/calculator.dart';
+import 'package:calculator_firebase_app/view/calculator/calculator.dart';
 
 void main() async {
 	

@@ -1,8 +1,8 @@
 class CalculationData {
   String equation;
   String result;
-  String id;
-  String previousId;
+  int id;
+  int previousId;
   String time;
 
   CalculationData(
