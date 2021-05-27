@@ -1,12 +1,16 @@
+import 'dart:async';
+
 import 'package:calculator_firebase_app/controllers/db_controller.dart';
 import 'package:calculator_firebase_app/model/calculation-data.dart';
 import 'package:calculator_firebase_app/view/calculator/history.dart';
 import 'package:calculator_firebase_app/view/generics/routing.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:calculator_firebase_app/view/calculator/display.dart';
 import 'package:calculator_firebase_app/view/calculator/key-controller.dart';
 import 'package:calculator_firebase_app/view/calculator/key-pad.dart';
 import 'package:calculator_firebase_app/view/calculator/controller.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 
 class Calculator extends StatefulWidget {
@@ -21,17 +25,27 @@ class _CalculatorState extends State<Calculator> {
 	CalculationData _output;
 	final LinearGradient _gradient = const LinearGradient(colors: [ Colors.black26, Colors.black45 ]);
 
-	@override
-	void initState() {
+	void setupControllers() {
+		if(KeyController.streamController.isClosed) {
+			KeyController.streamController = new StreamController.broadcast();
+		}
+		if(Controller.streamController.isClosed) {
+			Controller.streamController = new StreamController.broadcast();
+		}
 		KeyController.listen((event) => Controller.process(event));
 		Controller.listen((data) => setState(() { _output = data; }));
 		Controller.refresh();
+	}
+
+
+	@override
+	void initState() {
+		setupControllers();
 		super.initState();
 	}
 
 	@override
 	void dispose() {
-
 		KeyController.dispose();
 		Controller.dispose();
 		super.dispose();
@@ -41,7 +55,6 @@ class _CalculatorState extends State<Calculator> {
 	Widget build(BuildContext context) {
 
 		Size screen = MediaQuery.of(context).size;
-
 		double buttonSize = screen.width / 4;
 		double displayHeight = screen.height - (buttonSize * 5);
 	
@@ -58,15 +71,15 @@ class _CalculatorState extends State<Calculator> {
 				  	children: <Widget>[
 				  		UserAccountsDrawerHeader(
 								decoration: BoxDecoration(color: Color.fromARGB(196, 32, 64, 96),),
-								accountName: Text("${DbController.userCredential.user.displayName ?? "N/A"}",overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 18),),
-								accountEmail: Text("${DbController.userCredential.user.email ?? "N/A"}"),
+								accountName: Text("${DbController.user.displayName ?? "N/A"}",overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 18),),
+								accountEmail: Text("${DbController.user.email ?? "N/A"}"),
 								currentAccountPicture: CircleAvatar(
 									backgroundColor:
 									Theme.of(context).platform == TargetPlatform.iOS
 											? Colors.blue
 											: Colors.white,
 									child: Text(
-										DbController.userCredential.user.displayName != null? "${DbController.userCredential.user.displayName[0]}" : "A",
+										DbController.user.displayName != null? "${DbController.user.displayName[0]}" : "A",
 										style: TextStyle(fontSize: 40.0),
 									),
 								),
@@ -78,9 +91,8 @@ class _CalculatorState extends State<Calculator> {
 				  			leading: Icon(Icons.history, color: Colors.white,),
 				  			onTap: () {
 				  				Navigator.pop(context);
-				  				//Navigator.push(context, Routing.routeToHistory());
 									navigateToHistory(context);
-				  				},
+									},
 				  		),
 				  		SizedBox(height: 5,),
 				  		ListTile(
@@ -88,11 +100,9 @@ class _CalculatorState extends State<Calculator> {
 								tileColor: Colors.black12,
 								trailing: Icon(Icons.arrow_right, color: Colors.white),
 				  			leading: Icon(Icons.arrow_back, color: Colors.white),
-				  			onTap: () {
-				  				// Update the state of the app.
-				  				// ...
-				  				Navigator.pop(context);
-
+				  			onTap: () async{
+				  				Navigator.of(context).pop();
+				  				logout(context);
 				  			},
 				  		),
 				  	],
@@ -119,4 +129,12 @@ class _CalculatorState extends State<Calculator> {
 				Controller.refresh();
 			}
 	}
+
+	Future logout(BuildContext context) async {
+		await FirebaseAuth.instance.signOut();
+		DbController.user = null;
+		Navigator.of(context).pushReplacement(
+				Routing.routeToSignIn());
+	}
+
 }

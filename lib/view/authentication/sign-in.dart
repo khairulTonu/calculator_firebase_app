@@ -13,23 +13,14 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
 
   Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-
     try {
       await GoogleSignIn().signOut();
-
       final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-
-      // Obtain the auth details from the request
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-
-      // Create a new credential
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-
-      // Once signed in, return the UserCredential
       return await FirebaseAuth.instance.signInWithCredential(credential);
     }
     catch (e){
@@ -54,7 +45,7 @@ class _SignInState extends State<SignIn> {
               onPressed: (){
                 signInWithGoogle().then((UserCredential userCredential) {
                   if(userCredential != null) {
-                    DbController.userCredential = userCredential;
+                    DbController.user = userCredential.user;
                     Navigator.of(context).pushAndRemoveUntil(
                         Routing.routeToCalculator(), (Route<dynamic> route) => false);
                   }

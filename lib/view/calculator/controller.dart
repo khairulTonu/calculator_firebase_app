@@ -12,22 +12,29 @@ abstract class Controller {
 	static String result;
 	static bool isDecimal = false;
 
-	static StreamController _controller = StreamController();
-	static Stream get _stream => _controller.stream;
+	static StreamController streamController = StreamController.broadcast();
+	static Stream get _stream => streamController.stream;
 
 	static StreamSubscription listen(Function handler) => _stream.listen(handler);
 	static void refresh() => _fire(_calculationData);
 
-	static void _fire(CalculationData data) => _controller.add(_calculationData);
+	static void _fire(CalculationData data) => streamController.add(_calculationData);
 
 	static CalculationData get _calculationData => CalculationData(equation: _equation, result: result, previousId: previousId);
 
 	static String get _equation => inputEq;
 
-	static dispose() => _controller.close();
+	static dispose() {
+		inputEq = "0";
+		result = null;
+		previousId = null;
+		isDecimal = false;
+		refresh();
+		streamController.close();
+	}
 
 	static process(dynamic event) {
-		
+
 		CalculatorKey key = (event as KeyEvent).key;
 		switch(key.symbol.type) {
 
@@ -93,7 +100,7 @@ abstract class Controller {
 			refresh();
 		}
 	}
-	
+
 	static void _percent() {
 		int index = inputEq.length - 1;
 		String extractNumber = "";

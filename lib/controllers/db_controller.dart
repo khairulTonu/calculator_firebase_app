@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 
 class DbController{
   static FirebaseFirestore fireStore = FirebaseFirestore.instance;
-  static UserCredential userCredential;
+  static User user;
 
   static Future<bool> checkUserExist(String docID) async {
     bool exists = false;
@@ -25,7 +25,7 @@ class DbController{
 
   static Future<List<CalculationData>> getHistory() async {
     CollectionReference users = fireStore.collection('users');
-    QuerySnapshot historyDoc = await users.doc("${userCredential.user.email}").collection('history').orderBy("id").get();
+    QuerySnapshot historyDoc = await users.doc("${user.email}").collection('history').orderBy("id").get();
     List<DocumentSnapshot> historyList = historyDoc.docs ?? [];
     if (historyList.length > 0) {
       try {
@@ -50,7 +50,7 @@ class DbController{
     DateTime now = DateTime.now();
     String currentTimeStr = dateFormat.format(now);
     calculationData.time = currentTimeStr;
-    users.doc("${userCredential.user.email}").collection("history").doc().set(calculationData.toJson()).whenComplete(() {
+    users.doc("${user.email}").collection("history").doc().set(calculationData.toJson()).whenComplete(() {
       print("Data added to db");
     });
     if(Controller.previousId == null)

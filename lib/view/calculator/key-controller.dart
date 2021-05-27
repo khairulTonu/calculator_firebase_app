@@ -9,11 +9,11 @@ class KeyEvent {
 
 abstract class KeyController {
 
-	static StreamController _controller = StreamController();
-	static Stream get _stream => _controller.stream;
+	static StreamController streamController = StreamController.broadcast();
+	static Stream get _stream => streamController.stream;
 
 	static StreamSubscription listen(Function handler) => _stream.listen(handler as dynamic);
-	static void fire(KeyEvent event) => _controller.add(event);
+	static void fire(KeyEvent event) => streamController.add(event);
 
-	static dispose() => _controller.close();
+	static dispose() => streamController.close();
 }
