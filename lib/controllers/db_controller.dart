@@ -1,8 +1,11 @@
 import 'package:calculator_firebase_app/model/calculation-data.dart';
 import 'package:calculator_firebase_app/view/calculator/controller.dart';
+import 'package:calculator_firebase_app/view/generics/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 
 class DbController{
   static FirebaseFirestore fireStore = FirebaseFirestore.instance;
@@ -50,14 +53,18 @@ class DbController{
     DateTime now = DateTime.now();
     String currentTimeStr = dateFormat.format(now);
     calculationData.time = currentTimeStr;
-    users.doc("${user.email}").collection("history").doc().set(calculationData.toJson()).whenComplete(() {
-      print("Data added to db");
-    });
-    if(Controller.previousId == null)
-      {
-        Controller.previousId = calculationData.id;
-        Controller.refresh();
+    Utils.checkNetwork().then((bool isNetworkAvailable) {
+      if(isNetworkAvailable){
+        users.doc("${user.email}").collection("history").doc().set(calculationData.toJson()).whenComplete(() {
+          print("Data added to db");
+        });
+        if(Controller.previousId == null)
+        {
+          Controller.previousId = calculationData.id;
+          Controller.refresh();
+        }
       }
+    });
   }
 
 }

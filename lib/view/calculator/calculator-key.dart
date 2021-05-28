@@ -1,4 +1,6 @@
 import 'package:calculator_firebase_app/view/calculator/key-symbol.dart';
+import 'package:calculator_firebase_app/view/generics/HexColor.dart';
+import 'package:calculator_firebase_app/view/generics/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:calculator_firebase_app/view/calculator/key-controller.dart';
 
@@ -37,14 +39,14 @@ class CalculatorKey extends StatelessWidget {
 		switch (symbol.type) {
 
 			case KeyType.FUNCTION:
-				return Color.fromARGB(255, 96, 96, 96);
+				return  Utils.operatorButtonColor;
 
 			case KeyType.OPERATOR:
-				return Color.fromARGB(255, 32, 96, 128);
+				return symbol.value == "="? Utils.equalButtonColor : Utils.operatorButtonColor;
 
-			case KeyType.INTEGER:
+			case KeyType.NUMBER:
 			default:
-				return Color.fromARGB(255, 128, 128, 128);
+				return Utils.numberButtonColor;
 		}
 	}
 

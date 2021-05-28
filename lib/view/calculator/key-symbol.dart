@@ -1,6 +1,6 @@
 import 'package:calculator_firebase_app/view/calculator/calculator-key.dart';
 
-enum KeyType { FUNCTION, OPERATOR, INTEGER }
+enum KeyType { FUNCTION, OPERATOR, NUMBER }
 
 class KeySymbol {
 
@@ -17,5 +17,5 @@ class KeySymbol {
 	bool get isFunction => _functions.contains(this);
 	bool get isInteger => !isOperator && !isFunction;
 
-	KeyType get type => isFunction ? KeyType.FUNCTION : (isOperator ? KeyType.OPERATOR : KeyType.INTEGER);
+	KeyType get type => isFunction ? KeyType.FUNCTION : (isOperator ? KeyType.OPERATOR : KeyType.NUMBER);
 }

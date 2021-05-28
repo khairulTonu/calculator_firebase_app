@@ -44,7 +44,7 @@ abstract class Controller {
 			case KeyType.OPERATOR:
 				return handleOperator(key);
 
-			case KeyType.INTEGER:
+			case KeyType.NUMBER:
 				return handleNumber(key);
 		}
 	}
@@ -97,6 +97,11 @@ abstract class Controller {
 				isDecimal = false;
 			}
 			inputEq = inputEq.substring(0, inputEq.length - 1);
+			refresh();
+		}
+		if(inputEq.isEmpty){
+			result = previousId = null;
+			isDecimal = false;
 			refresh();
 		}
 	}

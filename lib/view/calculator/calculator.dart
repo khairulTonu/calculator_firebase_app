@@ -4,13 +4,13 @@ import 'package:calculator_firebase_app/controllers/db_controller.dart';
 import 'package:calculator_firebase_app/model/calculation-data.dart';
 import 'package:calculator_firebase_app/view/calculator/history.dart';
 import 'package:calculator_firebase_app/view/generics/routing.dart';
+import 'package:calculator_firebase_app/view/generics/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:calculator_firebase_app/view/calculator/display.dart';
 import 'package:calculator_firebase_app/view/calculator/key-controller.dart';
 import 'package:calculator_firebase_app/view/calculator/key-pad.dart';
 import 'package:calculator_firebase_app/view/calculator/controller.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 
 class Calculator extends StatefulWidget {
@@ -23,7 +23,7 @@ class Calculator extends StatefulWidget {
 class _CalculatorState extends State<Calculator> {
 
 	CalculationData _output;
-	final LinearGradient _gradient = const LinearGradient(colors: [ Colors.black26, Colors.black45 ]);
+	final LinearGradient _gradient = LinearGradient(colors: [ Utils.primaryColor, Utils.secondaryColor]);
 
 	void setupControllers() {
 		if(KeyController.streamController.isClosed) {
@@ -33,7 +33,11 @@ class _CalculatorState extends State<Calculator> {
 			Controller.streamController = new StreamController.broadcast();
 		}
 		KeyController.listen((event) => Controller.process(event));
-		Controller.listen((data) => setState(() { _output = data; }));
+		Controller.listen((data) {
+			if(mounted){
+				setState(() { _output = data; });
+			}
+		});
 		Controller.refresh();
 	}
 
@@ -60,7 +64,7 @@ class _CalculatorState extends State<Calculator> {
 	
 		return Scaffold(
 			appBar: AppBar(
-				backgroundColor: Color.fromARGB(196, 32, 64, 96),
+				backgroundColor: Utils.primaryColor,
 				title: Text("Calculator"),
 			),
 			drawer: Drawer(
@@ -109,13 +113,15 @@ class _CalculatorState extends State<Calculator> {
 				  ),
 				),
 			),
-			backgroundColor: Color.fromARGB(196, 32, 64, 96),
-			body: Column(
-				mainAxisAlignment: MainAxisAlignment.center,
-				children: <Widget>[
-					Display(value: _output, height: displayHeight),
-					Expanded(child: KeyPad())
-				]
+			body: Container(
+				decoration: BoxDecoration(gradient: _gradient),
+			  child: Column(
+			  	mainAxisAlignment: MainAxisAlignment.center,
+			  	children: <Widget>[
+			  		Display(value: _output, height: displayHeight),
+			  		Expanded(child: KeyPad())
+			  	]
+			  ),
 			),
 		);
 	}

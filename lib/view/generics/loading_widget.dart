@@ -8,7 +8,7 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SpinKitCircle(color: HexColor("#FF512F"),),
+      child: SpinKitCircle(color: Colors.white,),
     );
   }
 }

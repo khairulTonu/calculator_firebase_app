@@ -4,6 +4,7 @@
         android:label="calculator_firebase_app"
         android:icon="@mipmap/ic_launcher">
         <activity
+            android:label="Flutter Calculator"
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
