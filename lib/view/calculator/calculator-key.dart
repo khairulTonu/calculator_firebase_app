@@ -7,7 +7,7 @@ import 'package:calculator_firebase_app/view/calculator/key-controller.dart';
 abstract class Keys {
 
 	static KeySymbol clear = const KeySymbol('C');
-	static KeySymbol delete = const KeySymbol('⌫');
+	static KeySymbol delete = const KeySymbol('CE');
 	static KeySymbol percent = const KeySymbol('%');
 	static KeySymbol divide = const KeySymbol('÷');
 	static KeySymbol multiply = const KeySymbol('x');
@@ -39,7 +39,7 @@ class CalculatorKey extends StatelessWidget {
 		switch (symbol.type) {
 
 			case KeyType.FUNCTION:
-				return  Utils.operatorButtonColor;
+				return symbol.value == "C" || symbol.value == "CE"? Colors.blueAccent : Utils.operatorButtonColor;
 
 			case KeyType.OPERATOR:
 				return symbol.value == "="? Utils.equalButtonColor : Utils.operatorButtonColor;

@@ -13,7 +13,7 @@ class HistoryView extends StatefulWidget {
 class _HistoryViewState extends State<HistoryView> {
 
   final LinearGradient _listGradient = LinearGradient(colors: [ HexColor("#011519"), HexColor("#004D53")]);
-
+  final LinearGradient _gradient = LinearGradient(colors: [ Utils.primaryColor, Utils.secondaryColor]);
 
   Widget listItem(BuildContext context, CalculationData calculationData)
   {
@@ -55,8 +55,6 @@ class _HistoryViewState extends State<HistoryView> {
       ),
     );
   }
-
-  final LinearGradient _gradient = LinearGradient(colors: [ Utils.primaryColor, Utils.secondaryColor]);
 
   @override
   void initState() {
