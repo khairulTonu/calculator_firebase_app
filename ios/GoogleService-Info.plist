@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>724858084587-p0j044hemmfemnfssh4r63bo7gh5f3lq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.724858084587-p0j044hemmfemnfssh4r63bo7gh5f3lq</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>724858084587-ma0riors79farr29ai97januvlb529me.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDW5f-6ZN3CjkcrYcy_lX4i5bOcYCBwVEo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>724858084587</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.tonu.calculator</string>
+	<key>PROJECT_ID</key>
+	<string>calculator-firebase-5317a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>calculator-firebase-5317a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:724858084587:ios:ce68c699183ce4c47d32ae</string>
+</dict>
+</plist>
