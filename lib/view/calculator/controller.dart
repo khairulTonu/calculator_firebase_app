@@ -65,8 +65,8 @@ abstract class Controller {
 
 	static void handleOperator(CalculatorKey key) {
 		isDecimal = false;
-		if (key.symbol == Keys.equals) { return evaluateExpression(); }
 		if (result != null) { _condense(); }
+		if (key.symbol == Keys.equals) { return evaluateExpression(); }
 		if(inputEq.isNotEmpty && !isDigit(inputEq[inputEq.length-1])){
 			_delete();
 		}
@@ -79,6 +79,7 @@ abstract class Controller {
 
 	static void handleNumber(CalculatorKey key) {
 		String val = key.symbol.value;
+		if (result != null) { _condense(); }
 		if(inputEq == "0") { _delete(); }
 		if(inputEq.length > 2 && isOperator(inputEq[inputEq.length - 2]) && inputEq[inputEq.length -1] == "0") {_delete();}
 		inputEq = "$inputEq$val";
@@ -216,7 +217,11 @@ abstract class Controller {
 				values.add(applyOp(val1, val2, op));
 				print(values);
 			}
-			result = values.last.toString();
+			num ans = values.last;
+			if(ans == ans.truncate()){
+				ans = ans.toInt();
+			}
+			result = ans.toString();
 			refresh();
 			saveToDb();
 		}
@@ -229,6 +234,7 @@ abstract class Controller {
 	}
 
 	static void _condense() {
+		if(result != null) inputEq = "$result";
 		result = null;
 	}
 }

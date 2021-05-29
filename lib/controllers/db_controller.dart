@@ -58,11 +58,8 @@ class DbController{
         users.doc("${user.email}").collection("history").doc().set(calculationData.toJson()).whenComplete(() {
           print("Data added to db");
         });
-        if(Controller.previousId == null)
-        {
-          Controller.previousId = calculationData.id;
-          Controller.refresh();
-        }
+        Controller.previousId = calculationData.id;
+        Controller.refresh();
       }
     });
   }
