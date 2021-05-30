@@ -24,7 +24,6 @@ class Display extends StatelessWidget {
 			child: Container(
 				padding: EdgeInsets.fromLTRB(32, 32, 32, 32),
 				constraints: BoxConstraints.expand(height: height - (_margin)),
-				//decoration: BoxDecoration(gradient: _gradient),
 				child: AutoSizeText(_output != null && _output.result != null ? "${_output?.equation ?? "0"}\n=${_output?.result ?? "0"}":"${_output?.equation ?? "0"}", style: style, textAlign: TextAlign.right, )
 			)
 		);

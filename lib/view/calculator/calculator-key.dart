@@ -1,5 +1,4 @@
 import 'package:calculator_firebase_app/view/calculator/key-symbol.dart';
-import 'package:calculator_firebase_app/view/generics/HexColor.dart';
 import 'package:calculator_firebase_app/view/generics/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:calculator_firebase_app/view/calculator/key-controller.dart';

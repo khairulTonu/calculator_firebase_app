@@ -3,9 +3,7 @@ import 'package:calculator_firebase_app/view/calculator/controller.dart';
 import 'package:calculator_firebase_app/view/generics/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:get/get.dart';
 
 class DbController{
   static FirebaseFirestore fireStore = FirebaseFirestore.instance;

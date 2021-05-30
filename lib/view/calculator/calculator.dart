@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:calculator_firebase_app/controllers/db_controller.dart';
 import 'package:calculator_firebase_app/model/calculation-data.dart';
 import 'package:calculator_firebase_app/view/calculator/history.dart';
@@ -11,7 +10,6 @@ import 'package:calculator_firebase_app/view/calculator/display.dart';
 import 'package:calculator_firebase_app/view/calculator/key-controller.dart';
 import 'package:calculator_firebase_app/view/calculator/key-pad.dart';
 import 'package:calculator_firebase_app/view/calculator/controller.dart';
-
 
 class Calculator extends StatefulWidget {
 	Calculator({ Key key,}) : super(key: key);
